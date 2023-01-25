@@ -1,6 +1,6 @@
 # C Sharp Classess
 
-Practice C# classes with Map Game challenge
+Practice C# classes with challenge
 
 ## Requirements
 
