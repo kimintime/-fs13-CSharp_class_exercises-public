@@ -65,6 +65,7 @@ class Program
         var FinCities = Finland[0..4];
         var FirstCity = Finland[0];
         /* Write methods to print FinCities and FirstCity */
+        //These variables do work, the methods exist for printing here, but I chose to print within the class.
 
         Country.PrintCities(Finland);
 
