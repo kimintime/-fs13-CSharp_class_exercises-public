@@ -8,6 +8,8 @@ The requirements are below. I've only plugged in one country, but really I was j
 
 This is by no means the only approach. The Country could be further subdivided into a Cities class, Languages class, and/or utils for printing. Check out the instructions below if you'd like to run it. It does assume you have Microsoft's .Net SDK installed.
 
+<img width="548" alt="Screenshot 2023-01-29 at 0 05 38" src="https://user-images.githubusercontent.com/40215472/215293180-b86f9741-531c-47bc-ab1f-8cda29692d41.png">
+
 ### CountryGame
 
 1. Defining a class to represent a country. Each country has the following:
