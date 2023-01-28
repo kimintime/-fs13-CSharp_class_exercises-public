@@ -25,18 +25,18 @@ class Program
             "Europe",
             "Helsinki",
             27.3,
-            new string[]
+            new (string, bool)[]
             {
-                "Finnish",
-                "Swedish",
+                ("Finnish", true),
+                ("Swedish", false)
             },
-            new string[]
+            new (string, bool)[]
             {
-                "Helsinki",
-                "Tampere",
-                "Lahti",
-                "Porvoo",
-                "Kemi",
+                ( "Helsinki", true),
+                ( "Tampere", false),
+                ("Lahti", false),
+                ("Porvoo", false),
+                ("Kemi", false),
             },
             new string[]
             {
@@ -46,22 +46,27 @@ class Program
             }
         );
 
-        Country.HasBorder(Finland);
-        Finland.HasBorder("Finland");
-        Country.CheckWealth(Finland);
+        Console.WriteLine($"About {Finland.Name}: ");
+        Console.WriteLine(Country.HasBorder(Finland));
+        Console.WriteLine(Finland.HasBorder("China"));
+        Console.WriteLine($"GDP: {Finland.GDP}, {Country.CheckWealth(Finland)}");
+        Console.WriteLine($"Population: {Finland.Population}");
+        Console.WriteLine($"Region: {Finland.Region}");
+        Console.Write($"{Finland.Name} borders: ");
+
+        foreach (var border in Finland.Borders)
+        {
+            Console.Write(border + " ");
+        }
+        Console.WriteLine(" ");
+
+        Country.PrintLanguages(Finland);
 
         var FinCities = Finland[0..4];
         var FirstCity = Finland[0];
         /* Write methods to print FinCities and FirstCity */
 
-        Console.Write("Finnish cities: ");
-        foreach (var city in FinCities)
-        {
-            Console.Write(city + " ");
-        }
-        Console.WriteLine(" ");
-
-        Console.WriteLine($"The capital is {FirstCity}");
+        Country.PrintCities(Finland);
 
         //Challenge 2
         /* write your own game */
@@ -74,8 +79,8 @@ class Program
         public string? Region { get; init; }
         public string? Capital { get; init; }
         public double GDP { get; set; }
-        public string[] Languages { get; set; }
-        public string[] Cities { get; set; }
+        public (string Name, bool IsPrimary)[] Languages { get; set; }
+        public (string Name, bool IsCapital)[] Cities { get; set; }
         public string[] Borders { get; set; }
 
         public Country(
@@ -84,8 +89,8 @@ class Program
             string region,
             string capital,
             double gdp,
-            string[] languages,
-            string[] cities,
+            (string, bool)[] languages,
+            (string, bool)[] cities,
             string[] borders)
         {
             Name = name;
@@ -106,6 +111,8 @@ class Program
 
         public bool HasBorder(string countryName)
         {
+            Console.Write($"{countryName} shares a border: ");
+
             if (countryName == Name && Borders.Length > 0)
             {
                 return true;
@@ -116,6 +123,8 @@ class Program
 
         public static bool HasBorder(Country country)
         {
+            Console.Write($"{country.Name} shares a border: ");
+
             if (country.Borders.Length > 0)
             {
                 return true;
@@ -124,12 +133,12 @@ class Program
             return false;
         }
 
-        public string this[Index index]
+        public (string, bool) this[Index index]
         {
             get => Cities[index];
         }
 
-        public string[] this[Range range]
+        public (string, bool)[] this[Range range]
         {
             get
             {
@@ -139,17 +148,55 @@ class Program
 
         public static string CheckWealth(Country country)
         {
-            if (country.GDP > 5000)
+            Console.Write($"{country.Name}'s wealth is classed as: ");
+
+            if (country.GDP > 20)
             {
                 return Wealth.Rich.ToString();
             }
-            else if (country.GDP > 1000 && country.GDP < 5000)
+            else if (country.GDP > 10 && country.GDP < 20)
             {
                 return Wealth.Medium.ToString();
             }
             else
             {
                 return Wealth.Poor.ToString();
+            }
+        }
+
+        public static void PrintLanguages(Country country)
+        {
+            Console.Write($"{country.Name}'s Languages: ");
+
+            foreach (var language in country.Languages)
+            {
+                if (language.IsPrimary)
+                {
+                    Console.Write($"{language.Name} is the primary language, ");
+                }
+                else if (!language.IsPrimary)
+                {
+                    Console.Write(language.Name + " ");
+                }
+            }
+            Console.WriteLine(" ");
+        }
+
+        public static void PrintCities(Country country)
+        {
+            Console.Write($"Cities in {country.Name}: ");
+            foreach (var city in country.Cities)
+            {
+                Console.Write(city.Name + " ");
+            }
+            Console.WriteLine(" ");
+
+            foreach (var city in country.Cities)
+            {
+                if (city.IsCapital)
+                {
+                    Console.WriteLine($"The capital is {city.Name}");
+                }
             }
         }
     }
